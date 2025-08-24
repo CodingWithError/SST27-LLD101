@@ -1,8 +1,16 @@
 public class ShippingCostCalculator {
-    double cost(Shipment s){
-        if ("STANDARD".equals(s.type)) return 50 + 5*s.weightKg;
-        if ("EXPRESS".equals(s.type))  return 80 + 8*s.weightKg;
-        if ("OVERNIGHT".equals(s.type))return 120 + 10*s.weightKg;
-        throw new IllegalArgumentException("Unknown type: " + s.type);
+    private final ShippingStrategyRepository strategyRepository;
+
+    public ShippingCostCalculator() {
+        this.strategyRepository = new ShippingStrategyRepository();
+    }
+
+    public ShippingCostCalculator(ShippingStrategyRepository strategyRepository) {
+        this.strategyRepository = strategyRepository;
+    }
+
+    double cost(Shipment s) {
+        ShippingStrategy strategy = strategyRepository.getStrategy(s.type);
+        return strategy.calculateCost(s.weightKg);
     }
 }
