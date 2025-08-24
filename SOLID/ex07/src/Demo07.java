@@ -3,5 +3,7 @@ public class Demo07 {
         Machine m = new BasicPrinter();
         m.print("Hello");
         m.scan("/tmp/out"); // blows up
+        Printable printer = new PrinterOnly();
+        printer.print("Hello from ISP-compliant printer");
     }
 }
